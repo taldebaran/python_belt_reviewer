@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>New Book!</title>
+  </head>
+  <body>
+    <a href="{% url 'books' %}">Home</a> |
+    <a href="{% url 'logout' %}">Logout</a>
+
+    <h1> Add a new book and review it! </h1>
+    <form action="/create_book_review" method="post">
+      {% csrf_token %}
+      Title: <input type="text" name="title"> </br>
+      Author: <select name="author">
+        <option value="" selected="selected">Select author</option>
+      {% for author in authors %}
+        <option value="{{author.id}}">{{author.name}}</option>
+      {% endfor %}
+      </select> </br>
+      Custom Author: <input type="text" name="custom_author"></br>
+      Review: <textarea name="review" rows="8" cols="80"></textarea></br>
+      Rating: <input type="number" name="rating" max="5" min="1"> </br>
+      <input type="submit" name="" value="Review">
+    </form>
+  </body>
+</html>

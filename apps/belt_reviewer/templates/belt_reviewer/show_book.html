@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% load app_filters %}
+    <title>Look at this book!</title>
+  </head>
+  <body>
+    <h1>{{book.title}}</h1>
+    <h5>{{book.author.name}}</h5>
+
+    <h2> Reviews: </h2>
+    {% for review in reviews %}
+      <h3> <a href="/books/{{review.book.id}}"> {{review.book.title}} </a></h3>
+      {% for i in review.rating|get_range %}
+        *
+      {% endfor %}
+      <div>
+        {{review.user.first_name}} says:
+        <p> {{review.text}} </p>
+      </div>
+      {{ review.created_at}}
+
+      {% if review.user.id == request.session.user.id %}
+        <a href="/review/del/{{review.id}}"> Delete </a>
+      {% endif %}
+    {% endfor %}
+  </body>
+</html>
